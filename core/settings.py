@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-0+^wvxtw+u8a$hgq*kb*d_ctjf68y)if@b8xui-dhm98ew#!*k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -38,8 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'phonenumber_field',
+    'django_countries',
+    'stripe',
+
+
     'store',
-    'rest_framework',
+    'basket',
+    'account',
+    'orders',
+    'payment',
+
+
 ]
 
 MIDDLEWARE = [
@@ -65,7 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'store.context_processors.categories'
+                'store.context_processors.categories',
+                'basket.context_processors.basket',
             ],
         },
     },
@@ -123,6 +134,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -130,3 +145,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# Basket session ID
+BASKET_SESSION_ID = 'basket'
+
+# Custom user model
+AUTH_USER_MODEL = 'account.UserBase'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
+
+# Email setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
